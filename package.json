@@ -1,0 +1,20 @@
+{
+	"author": "David Goehrig",
+	"name": "pontifex.udp",
+	"license" : "MIT",
+	"description": "Creates bridges between UDP packets and AMQP",
+	"version": "0.0.1",
+	"repository": {
+		"url": "http://github.com/cthulhuology/pontifex.udp"
+	},
+	"main": "./lib/UDP.coffee",
+	"bin": {},
+	"dependencies": {
+		"pontifex" : ">=0.0.3"
+	},
+	"devDependencies": {},
+	"optionalDependencies": {},
+	"engines": {
+		"node": "*"
+	}
+}

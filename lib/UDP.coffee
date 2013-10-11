@@ -1,0 +1,22 @@
+# UDP.coffee
+#
+# (c) 2013 Dave Goehrig <dave@dloh.org>
+#
+
+udp = require 'dgram'
+
+Udp = (Bridge, Url) ->
+	self = this
+	[ proto, host, port, domain, exchange, key, queue, dest, path, dhost, dport ] = Url.match(///([^:]+)://([^:]+):(\d+)/([^\/]*)/([^\/]*)/([^\/]*)/([^\/]*)/([^\/]*)/([^\/]*)/(\d+\.\d+\.\d+\.\d+)/(\d+)///)[1...] # "udp4" || "udp6", "dloh.org", "9966", //, "source-exchange", "source-key", "source-queue", "dest-exchange", "dest-key"
+	self.server = udp.createSocket 'udp4'
+	self.server.bind port, host
+	self.socket =  send : (message) ->
+		self.server.send new Buffer(message), 0, message.length, dport, dhost, () ->
+			console.log "Sent #{message} to #{dhost}:#{dport}"
+	Bridge.connect domain, () ->
+		Bridge.route exchange, key, queue
+		Bridge.subscribe queue, self.socket, self.socket.send
+	self.server.on 'message', (message, route) ->
+		Bridge.send dest, path, message
+
+module.exports = Udp
