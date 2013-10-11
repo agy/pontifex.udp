@@ -3,7 +3,7 @@
 udp = require 'dgram'
 server = udp.createSocket 'udp4'
 
-server.bind 9966
+server.bind 6699
 
 server.on 'error', (error) ->
 	console.log "UDP Error: #{error}"
