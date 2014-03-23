@@ -1,6 +1,7 @@
 # UDP.coffee
 #
 # (c) 2013 Dave Goehrig <dave@dloh.org>
+# (c) 2014 wot.io LLC
 #
 
 udp = require 'dgram'
