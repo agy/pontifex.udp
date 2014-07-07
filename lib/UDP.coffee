@@ -49,10 +49,3 @@ Udp = (Bridge, Url) ->
                         Bridge.send dest, path, message
 
 module.exports = Udp
-~                                                                                                                                                                                                                                           
-~                                                                                                                                                                                                                                           
-~                                                                                                                                                                                                                                           
-~                                                                                                                                                                                                                                           
-~                                                                                                                                                                                                                                           
-~                                                                                                                                                                                                                                           
-~                     
