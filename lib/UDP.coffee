@@ -13,6 +13,8 @@ Udp = (Bridge, Url) ->
         url = "/#{domain}/#{exchange}/#{key}/#{queue}/#{dest}/#{path}"
         monitoringExchange = 'monitoring-in'
         monitoringHashKey='#'
+        pingMessage = '["ping"]'
+        pongMessage = '["pong"]'
 
         self.getDate = () ->
         date = new Date()
@@ -38,9 +40,19 @@ Udp = (Bridge, Url) ->
                 Bridge.subscribe queue, self.socket, self.socket.send
         self.server.on 'message', (message, route) ->
                 messageLength = message.length
-                readConnection = '["read_connection", "'+url+'", "", "' + accountName + '", "'+messageLength+'", "'+self.getDate()+'"]'
-                Bridge.send monitoringExchange, monitoringHashKey, readConnection
-                Bridge.send dest, path, message
+                if message.toString().replace(/(\r\n|\n|\r)/gm,"") == pingMessage
+                        self.server.send new Buffer(pongMessage), 0, pongMessage.length, dport, dhost, ()->
+
+                else
+                        readConnection = '["read_connection", "'+url+'", "", "' + accountName + '", "'+messageLength+'", "'+self.getDate()+'"]'
+                        Bridge.send monitoringExchange, monitoringHashKey, readConnection
+                        Bridge.send dest, path, message
 
 module.exports = Udp
-~                      
+~                                                                                                                                                                                                                                           
+~                                                                                                                                                                                                                                           
+~                                                                                                                                                                                                                                           
+~                                                                                                                                                                                                                                           
+~                                                                                                                                                                                                                                           
+~                                                                                                                                                                                                                                           
+~                     
